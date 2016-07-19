@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
+gem 'omniauth-facebook'
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
-gem 'stock_quote' 
+gem 'stock_quote'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.6'
 # Use sqlite3 as the database for Active Record
