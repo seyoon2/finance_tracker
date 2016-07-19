@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'omniauth-facebook'
+
 gem 'devise'
 gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
