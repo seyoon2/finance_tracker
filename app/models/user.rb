@@ -2,27 +2,21 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable,
-           :rememberable, :trackable, :validatable, :omniauthable
+           :rememberable, :trackable, :validatable
   has_many :user_stocks
   has_many :stocks, through: :user_stocks
 
-  def self.find_for_oauth(auth)
-   user = User.where(uid: auth.uid, provider: auth.provider).first
-   unless user
-     user = User.create(
-       uid: auth.uid,
-       provider: auth.provider,
-       name: auth.info.name,
-       email: User.get_email(auth),
-       password: Devise.friendly_token[4, 30])
-   end
-   user
- end
+  def can_add_stock?(ticker_symbol)
+    under_stock_limit? && !stock_already_added?(ticker_symbol)
+  end
 
- private
-   def self.get_email(auth)
-     email = auth.info.email
-     email = "#{auth.provider}-#{auth.uid}@example.com" if email.blank?
-     email
-   end
+  def under_stock_limit?
+    (user_stocks.count < 10)
+  end
+
+  def stock_already_added?(ticker_symbol)
+    stock = Stock.find_by_ticker(ticker_symbol)
+    return false unless stock
+    user_stocks.where(stock_id: stock.id).exists?
+  end
 end

@@ -15,6 +15,7 @@ var init_stock_lookup;
    });
 
   $('#stock-lookup-form').on('ajax:error', function(event, xhr, status, error){
+    hide_spinner();
   $('#stock-lookup-results').replaceWith('');
   $('#stock-lookup-errors').replaceWith('Stock was not found.');
    });
@@ -24,4 +25,4 @@ var init_stock_lookup;
 
  $(document).ready(function() {
    init_stock_lookup();
-}) 
+})
